@@ -18,19 +18,23 @@ contract FakeUsdc {
         emit Sold(msg.sender, _balance[msg.sender]);
         return msg.sender;
     }
-    function transfer(address _to, uint _amount) public returns(bool) {
+    function transfer(address _to, uint _amount) public returns(address) {
         _balance[msg.sender] -= _amount;
         _balance[_to] += _amount;
         emit Transfered(msg.sender, _balance[msg.sender], _to, _balance[_to]);
-        return true;
+        address temp = msg.sender;
+        return temp;
     }
-    function safeTransfer (address _from, address _to, uint _amount) public returns (bool) {
+    function safeTransfer (address _from, address _to, uint _amount) public{
         _balance[_from] -= _amount;
         _balance[_to] += _amount;
         emit SafeTransfered(_from, _balance[_from], _to, _balance[_to]);
-        return true;
     }
     function balanceOf(address _addr) public view returns(uint) {
         return _balance[_addr];
+    }
+
+    function test() public view returns (address, uint) {
+        return (msg.sender, _balance[msg.sender]);
     }
 }
